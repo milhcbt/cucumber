@@ -428,6 +428,9 @@ message TestCaseStarted {
   string pickleId = 1;
   Timestamp timestamp = 2;
   Platform platform = 3;
+  // Used if the implementation has implemented retry
+  //   also present in TestStepStarted, TestStepFinished, TestCaseFinished
+  uint32 attemptNumber = 4;
 
   message Platform {
     // The runner implementation. For example "SpecFlow", "Cucumber-JVM", "Behat" etc.
@@ -445,6 +448,7 @@ message TestCaseFinished {
   string pickleId = 1;
   Timestamp timestamp = 2;
   TestResult testResult = 3;
+  uint32 attemptNumber = 4;
 }
 
 // For each step, there will be a match
@@ -459,6 +463,7 @@ message TestStepStarted {
   string pickleId = 1;
   uint32 index = 2;
   Timestamp timestamp = 3;
+  uint32 attemptNumber = 4;
 }
 
 message TestStepFinished {
@@ -466,6 +471,7 @@ message TestStepFinished {
   uint32 index = 2;
   TestResult testResult = 3;
   Timestamp timestamp = 4;
+  uint32 attemptNumber = 4;
 }
 
 message TestHookStarted {
@@ -484,6 +490,7 @@ message TestResult {
   string message = 2;
   reserved 3;
   Duration duration = 4;
+  bool retried = 5;
 
   /**
    * Status of a step. Can also represent status of a Pickle (aggregated
